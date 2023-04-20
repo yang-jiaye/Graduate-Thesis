@@ -209,3 +209,18 @@ MOTSFusion:
 - 21 
 
 We plan to use FasterRCNN or yolo to train 2d network.
+
+April 15th
+
+When reproduce PointRCNN
+
+pyyaml yaml.load() should add `loader = Loader` inside.
+
+In lib/datasets/kitti_rcnn_dataset.py line 298
+
+code resample the points so that the number is npoints set in cfg. But if choosing replace = False, there are not enough point to sample. So modify to replace = True
+
+April 17th
+
+epochs:   0%|                                                         | 0/70 [08:58<?, ?it/s, reg_fg_sum=31, loss=2.36, lr=0.000202]
+epochs: 100%|██████████████████████████████████████████████| 70/70 [19:36:58<00:00, 1008.83s/it, reg_fg_sum=14, loss=0.592, lr=2e-8]
