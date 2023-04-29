@@ -224,3 +224,43 @@ April 17th
 
 epochs:   0%|                                                         | 0/70 [08:58<?, ?it/s, reg_fg_sum=31, loss=2.36, lr=0.000202]
 epochs: 100%|██████████████████████████████████████████████| 70/70 [19:36:58<00:00, 1008.83s/it, reg_fg_sum=14, loss=0.592, lr=2e-8]
+
+April 20th
+
+bbox AP:96.9126, 89.5387, 88.7488
+bev  AP:90.2156, 87.8947, 85.5191
+3d   AP:89.1939, 78.8542, 77.9137
+aos  AP:96.90, 89.42, 88.54
+Car AP@0.70, 0.50, 0.50:
+bbox AP:96.9126, 89.5387, 88.7488
+bev  AP:97.0941, 89.8168, 89.3443
+3d   AP:97.0544, 89.7747, 89.2549
+aos  AP:96.90, 89.42, 88.54
+
+April 28th
+
+environment for visualization
+
+The visualization sometimes not working, producing a blank window by ```cv2.imshow```
+
+Two strange bugs
+
+```
+QObject::moveToThread: Current thread (0x120ad90) is not the object's thread (0x17ba3e0).
+Cannot move to target thread (0x120ad90)
+
+qt.qpa.plugin: Could not load the Qt platform plugin "xcb" in "/home/ackerman/Public/miniconda3/envs/Vis/lib/python3.7/site-packages/cv2/qt/plugins" even though it was found.
+This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.
+
+Available platform plugins are: xcb, eglfs, linuxfb, minimal, minimalegl, offscreen, vnc, wayland-egl, wayland, wayland-xcomposite-egl, wayland-xcomposite-glx, webgl.
+```
+
+The first one comes from qt lib conflict of pyqt in conda and opencv in pip.
+
+The second one comes from qt lib conflict of opencv and pyqt5.
+
+The solution is to install both opencv and mayavi in conda or pip.
+
+But in conda opencv and mayavi will make conflicts.
+
+So just install opencv mayavi vtk pyqt5 in pip. Everything goes fine.
