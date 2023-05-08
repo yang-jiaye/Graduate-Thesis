@@ -56,7 +56,7 @@ after = pycocotools.mask.decode(rle)
 plt.imshow(after)
 plt.show()
 ```
-![](figures/3.7.1.png)
+![](figures/230301.png)
 ![KITTI/testing/0000/000000,png](figures/000000.png)
 
 In trackcnn results, many are with low scores, so can be neglected.
@@ -264,3 +264,52 @@ The solution is to install both opencv and mayavi in conda or pip.
 But in conda opencv and mayavi will make conflicts.
 
 So just install opencv mayavi vtk pyqt5 in pip. Everything goes fine.
+
+May 4th
+
+捏妈妈的，大无语事件。调了一周bug，越来越感觉是数据集label的问题，可视化结果出来车都是向下歪的。
+
+首先，他娘的这个相机是朝地上拍的，和雷达之间有个夹角，和kitti不一样，所以计算bounding box的时候不可以先在rect里面算长方体再投影到velo里。要先把orientation向量投到velo再算3dbox。还好我空间感强，看着旋转矩阵就感觉不对。
+
+这个旋转矩阵居然不是正交的，太逆天了，线性代数都没学好了属于是。
+
+其次，这个标注文件真的太无语了，kitti是按照hwl的顺序标注的，但是它生成的文件居然是hlw的
+
+如图所示![](figures/230504.png)
+
+红色是预测框，很奇怪，都是横过来的，原因就是宽度w和长度l反了。奶奶滴。
+
+在查源码的时候还发现一个问题，kitti的yaw角度是按照rect坐标系x轴顺时针为正的，和数学里逆时针还不一样。
+
+十分钟之后发现是因为y轴朝下的缘故
+
+我又发现dair的yaw角度是按照相对z轴的旋转角度来的，这也解释了为什么一开始可视化看不出来，本来w和l反过来就相当于少转了90度，z轴比x轴超前90度，又弥补回去了，就看不出问题，负负得正了。
+
+继续查dair源码，里面有个转换函数是这样的
+
+```
+def write_kitti_in_txt(my_json, path_txt):
+    wf = open(path_txt, "w")
+    for item in my_json:
+        i1 = str(item["type"]).title()
+        i2 = str(item["truncated_state"])
+        i3 = str(item["occluded_state"])
+        i4 = str(item["alpha"])
+        i5, i6, i7, i8 = (
+            str(item["2d_box"]["xmin"]),
+            str(item["2d_box"]["ymin"]),
+            str(item["2d_box"]["xmax"]),
+            str(item["2d_box"]["ymax"]),
+        )
+        # i9, i10, i11 = str(item["3d_dimensions"]["h"]), str(item["3d_dimensions"]["w"]), str(item["3d_dimensions"]["l"])
+        i9, i11, i10 = str(item["3d_dimensions"]["h"]), str(item["3d_dimensions"]["w"]), str(item["3d_dimensions"]["l"])
+        i12, i13, i14 = str(item["3d_location"]["x"]), str(item["3d_location"]["y"]), str(item["3d_location"]["z"])
+        # i15 = str(item["rotation"])
+        i15 = str(-eval(item["rotation"]))
+        item_list = [i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15]
+        item_string = " ".join(item_list) + "\n"
+        wf.write(item_string)
+    wf.close()
+```
+
+i10和i11被莫名其妙的调换了位置，看不懂啥意思。
