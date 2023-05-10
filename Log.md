@@ -63,7 +63,7 @@ In trackcnn results, many are with low scores, so can be neglected.
 
 # March 9th
 
-Download Dair-V2X-I dataset. In image photo, 007084 become red from blue.
+Download DAIR-V2X-I dataset. In image photo, 007084 become red from blue.
 
 The image set is aligned with velodyne set. [Explanation](https://blog.csdn.net/zhouqiping/article/details/123171905)
 
@@ -210,7 +210,7 @@ MOTSFusion:
 
 We plan to use FasterRCNN or yolo to train 2d network.
 
-April 15th
+# April 15th
 
 When reproduce PointRCNN
 
@@ -220,12 +220,12 @@ In lib/datasets/kitti_rcnn_dataset.py line 298
 
 code resample the points so that the number is npoints set in cfg. But if choosing replace = False, there are not enough point to sample. So modify to replace = True
 
-April 17th
+# April 17th
 
 epochs:   0%|                                                         | 0/70 [08:58<?, ?it/s, reg_fg_sum=31, loss=2.36, lr=0.000202]
 epochs: 100%|██████████████████████████████████████████████| 70/70 [19:36:58<00:00, 1008.83s/it, reg_fg_sum=14, loss=0.592, lr=2e-8]
 
-April 20th
+# April 20th
 
 bbox AP:96.9126, 89.5387, 88.7488
 bev  AP:90.2156, 87.8947, 85.5191
@@ -237,7 +237,7 @@ bev  AP:97.0941, 89.8168, 89.3443
 3d   AP:97.0544, 89.7747, 89.2549
 aos  AP:96.90, 89.42, 88.54
 
-April 28th
+# April 28th
 
 environment for visualization
 
@@ -265,7 +265,7 @@ But in conda opencv and mayavi will make conflicts.
 
 So just install opencv mayavi vtk pyqt5 in pip. Everything goes fine.
 
-May 4th
+# May 4th
 
 捏妈妈的，大无语事件。调了一周bug，越来越感觉是数据集label的问题，可视化结果出来车都是向下歪的。
 
@@ -283,9 +283,9 @@ May 4th
 
 十分钟之后发现是因为y轴朝下的缘故
 
-我又发现dair的yaw角度是按照相对z轴的旋转角度来的，这也解释了为什么一开始可视化看不出来，本来w和l反过来就相当于少转了90度，z轴比x轴超前90度，又弥补回去了，就看不出问题，负负得正了。
+我又发现DAIR的yaw角度是按照相对z轴的旋转角度来的，这也解释了为什么一开始可视化看不出来，本来w和l反过来就相当于少转了90度，z轴比x轴超前90度，又弥补回去了，就看不出问题，负负得正了。
 
-继续查dair源码，里面有个转换函数是这样的
+继续查DAIR源码，里面有个转换函数是这样的
 
 ```
 def write_kitti_in_txt(my_json, path_txt):

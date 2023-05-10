@@ -1,0 +1,162 @@
+\begin{thebibliography}{26}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{#1}
+\expandafter\ifx\csname urlstyle\endcsname\relax\else
+  \urlstyle{same}\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \DeclareUrlCommand\doi{\urlstyle{rm}}
+  \def\eprint#1#2{#2}
+\else
+  \def\doi#1{\href{https://doi.org/#1}{\nolinkurl{#1}}}
+  \let\eprint\href
+\fi
+
+\bibitem[Geiger et~al.(2013)Geiger, Lenz, Stiller, and Urtasun]{geiger2013vision}
+GEIGER A, LENZ P, STILLER C, et~al.
+\newblock Vision meets robotics: The kitti dataset\allowbreak[J].
+\newblock The International Journal of Robotics Research, 2013, 32\allowbreak (11): 1231-1237.
+
+\bibitem[邢亚男(2022)]{xinyanan2022}
+邢亚男.
+\newblock 车路协同感知融合研究\allowbreak[D/OL].
+\newblock 吉林大学, 2022.
+\newblock DOI: \doi{10.27162/d.cnki.gjlin.2022.006243}.
+
+\bibitem[Mao et~al.(2022)Mao, Shi, Wang, and Li]{mao20223d}
+MAO J, SHI S, WANG X, et~al.
+\newblock 3d object detection for autonomous driving: a review and new outlooks\allowbreak[A].
+\newblock 2022.
+
+\bibitem[Qi et~al.(2017)Qi, Su, Mo, and Guibas]{qi2017pointnet}
+QI C~R, SU H, MO K, et~al.
+\newblock Pointnet: Deep learning on point sets for 3d classification and segmentation\allowbreak[C]//\allowbreak
+Proceedings of the IEEE conference on computer vision and pattern recognition.
+\newblock 2017: 652-660.
+
+\bibitem[Qi et~al.(2017)Qi, Yi, Su, and Guibas]{qi2017pointnet++}
+QI C~R, YI L, SU H, et~al.
+\newblock Pointnet++: Deep hierarchical feature learning on point sets in a metric space\allowbreak[J].
+\newblock Advances in neural information processing systems, 2017, 30.
+
+\bibitem[Shi et~al.(2019)Shi, Wang, and Li]{shi2019pointrcnn}
+SHI S, WANG X, LI H.
+\newblock Pointrcnn: 3d object proposal generation and detection from point cloud\allowbreak[C]//\allowbreak
+Proceedings of the IEEE/CVF conference on computer vision and pattern recognition.
+\newblock 2019: 770-779.
+
+\bibitem[Chen et~al.(2017)Chen, Ma, Wan, Li, and Xia]{chen2017multi}
+CHEN X, MA H, WAN J, et~al.
+\newblock Multi-view 3d object detection network for autonomous driving\allowbreak[C]//\allowbreak
+Proceedings of the IEEE conference on Computer Vision and Pattern Recognition.
+\newblock 2017: 1907-1915.
+
+\bibitem[Zhou et~al.(2018)Zhou and Tuzel]{zhou2018voxelnet}
+ZHOU Y, TUZEL O.
+\newblock Voxelnet: End-to-end learning for point cloud based 3d object detection\allowbreak[C]//\allowbreak
+Proceedings of the IEEE conference on computer vision and pattern recognition.
+\newblock 2018: 4490-4499.
+
+\bibitem[Weng et~al.(2020)Weng, Wang, Held, and Kitani]{weng2020ab3dmot}
+WENG X, WANG J, HELD D, et~al.
+\newblock Ab3dmot: A baseline for 3d multi-object tracking and new evaluation metrics\allowbreak[A].
+\newblock 2020.
+
+\bibitem[Weng et~al.(2020)Weng, Wang, Held, and Kitani]{weng20203d}
+WENG X, WANG J, HELD D, et~al.
+\newblock 3d multi-object tracking: A baseline and new evaluation metrics\allowbreak[C]//\allowbreak
+2020 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS).
+\newblock IEEE, 2020: 10359-10366.
+
+\bibitem[Bolme et~al.(2010)Bolme, Beveridge, Draper, and Lui]{bolme2010visual}
+BOLME D~S, BEVERIDGE J~R, DRAPER B~A, et~al.
+\newblock Visual object tracking using adaptive correlation filters\allowbreak[C]//\allowbreak
+2010 IEEE computer society conference on computer vision and pattern recognition.
+\newblock IEEE, 2010: 2544-2550.
+
+\bibitem[Henriques et~al.(2012)Henriques, Caseiro, Martins, and Batista]{henriques2012exploiting}
+HENRIQUES J~F, CASEIRO R, MARTINS P, et~al.
+\newblock Exploiting the circulant structure of tracking-by-detection with kernels\allowbreak[C]//\allowbreak
+Computer Vision--ECCV 2012: 12th European Conference on Computer Vision, Florence, Italy, October 7-13, 2012, Proceedings, Part IV 12.
+\newblock Springer, 2012: 702-715.
+
+\bibitem[Henriques et~al.(2014)Henriques, Caseiro, Martins, and Batista]{henriques2014high}
+HENRIQUES J~F, CASEIRO R, MARTINS P, et~al.
+\newblock High-speed tracking with kernelized correlation filters\allowbreak[J].
+\newblock IEEE transactions on pattern analysis and machine intelligence, 2014, 37\allowbreak (3): 583-596.
+
+\bibitem[Danelljan et~al.(2015)Danelljan, Hager, Shahbaz~Khan, and Felsberg]{danelljan2015convolutional}
+DANELLJAN M, HAGER G, SHAHBAZ~KHAN F, et~al.
+\newblock Convolutional features for correlation filter based visual tracking\allowbreak[C]//\allowbreak
+Proceedings of the IEEE international conference on computer vision workshops.
+\newblock 2015: 58-66.
+
+\bibitem[Bromley et~al.(1993)Bromley, Guyon, LeCun, S{\"a}ckinger, and Shah]{bromley1993signature}
+BROMLEY J, GUYON I, LECUN Y, et~al.
+\newblock Signature verification using a" siamese" time delay neural network\allowbreak[J].
+\newblock Advances in neural information processing systems, 1993, 6.
+
+\bibitem[Bertinetto et~al.(2016)Bertinetto, Valmadre, Henriques, Vedaldi, and Torr]{bertinetto2016fully}
+BERTINETTO L, VALMADRE J, HENRIQUES J~F, et~al.
+\newblock Fully-convolutional siamese networks for object tracking\allowbreak[C]//\allowbreak
+Computer Vision--ECCV 2016 Workshops: Amsterdam, The Netherlands, October 8-10 and 15-16, 2016, Proceedings, Part II 14.
+\newblock Springer, 2016: 850-865.
+
+\bibitem[王思信(2020)]{wang2020jiyusanweileida}
+王思信.
+\newblock 基于三维激光雷达与视觉融合 的车辆跟踪与驾驶行为研究\allowbreak[D].
+\newblock 武汉理工大学, 2020.
+
+\bibitem[Kim et~al.(2021)Kim, O{\v{s}}ep, and Leal-Taix{\'e}]{kim2021eagermot}
+KIM A, O{\v{S}}EP A, LEAL-TAIX{\'E} L.
+\newblock Eagermot: 3d multi-object tracking via sensor fusion\allowbreak[C]//\allowbreak
+2021 IEEE International Conference on Robotics and Automation (ICRA).
+\newblock IEEE, 2021: 11315-11321.
+
+\bibitem[Geiger et~al.(2012)Geiger, Lenz, and Urtasun]{geiger2012we}
+GEIGER A, LENZ P, URTASUN R.
+\newblock Are we ready for autonomous driving? the kitti vision benchmark suite\allowbreak[C]//\allowbreak
+2012 IEEE conference on computer vision and pattern recognition.
+\newblock IEEE, 2012: 3354-3361.
+
+\bibitem[Huang et~al.(2018)Huang, Cheng, Geng, Cao, Zhou, Wang, Lin, and Yang]{huang2018apolloscape}
+HUANG X, CHENG X, GENG Q, et~al.
+\newblock The apolloscape dataset for autonomous driving\allowbreak[C]//\allowbreak
+Proceedings of the IEEE conference on computer vision and pattern recognition workshops.
+\newblock 2018: 954-960.
+
+\bibitem[Sun et~al.(2020)Sun, Kretzschmar, Dotiwalla, Chouard, Patnaik, Tsui, Guo, Zhou, Chai, Caine, et~al.]{sun2020scalability}
+SUN P, KRETZSCHMAR H, DOTIWALLA X, et~al.
+\newblock Scalability in perception for autonomous driving: Waymo open dataset\allowbreak[C]//\allowbreak
+Proceedings of the IEEE/CVF conference on computer vision and pattern recognition.
+\newblock 2020: 2446-2454.
+
+\bibitem[Caesar et~al.(2020)Caesar, Bankiti, Lang, Vora, Liong, Xu, Krishnan, Pan, Baldan, and Beijbom]{caesar2020nuscenes}
+CAESAR H, BANKITI V, LANG A~H, et~al.
+\newblock nuscenes: A multimodal dataset for autonomous driving\allowbreak[C]//\allowbreak
+Proceedings of the IEEE/CVF conference on computer vision and pattern recognition.
+\newblock 2020: 11621-11631.
+
+\bibitem[Sun et~al.(2022)Sun, Sun, Wang, and Zhao]{sun2022object}
+SUN P, SUN C, WANG R, et~al.
+\newblock Object detection based on roadside lidar for cooperative driving automation: a review\allowbreak[J].
+\newblock Sensors, 2022, 22\allowbreak (23): 9316.
+
+\bibitem[Wang et~al.(2022)Wang, Zhang, Li, Li, Wang, Lei, and Haibing]{wang2022ips300+}
+WANG H, ZHANG X, LI Z, et~al.
+\newblock Ips300+: a challenging multi-modal data sets for intersection perception system\allowbreak[C]//\allowbreak
+2022 International Conference on Robotics and Automation (ICRA).
+\newblock IEEE, 2022: 2539-2545.
+
+\bibitem[Yu et~al.(2022)Yu, Luo, Shu, Huo, Yang, Shi, Guo, Li, Hu, Yuan, et~al.]{yu2022dair}
+YU H, LUO Y, SHU M, et~al.
+\newblock Dair-v2x: A large-scale dataset for vehicle-infrastructure cooperative 3d object detection\allowbreak[C]//\allowbreak
+Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition.
+\newblock 2022: 21361-21370.
+
+\bibitem[Cre{\ss} et~al.(2022)Cre{\ss}, Zimmer, Strand, Fortkord, Dai, Lakshminarasimhan, and Knoll]{cress2022a9}
+CRE{SS} C, ZIMMER W, STRAND L, et~al.
+\newblock A9-dataset: Multi-sensor infrastructure-based dataset for mobility research\allowbreak[C]//\allowbreak
+2022 IEEE Intelligent Vehicles Symposium (IV).
+\newblock IEEE, 2022: 965-970.
+
+\end{thebibliography}
