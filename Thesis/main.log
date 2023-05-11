@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.5.8)  11 MAY 2023 15:59
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.5.8)  12 MAY 2023 01:56
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1002,79 +1002,33 @@ Missing character: There is no □ (U+25A1) in font TeX Gyre Termes/OT:script=la
 Missing character: There is no □ (U+25A1) in font TeX Gyre Termes/OT:script=latn;language=dflt;mapping=tex-text;!
 Missing character: There is no □ (U+25A1) in font TeX Gyre Termes/OT:script=latn;language=dflt;mapping=tex-text;!
 Missing character: There is no □ (U+25A1) in font TeX Gyre Termes/OT:script=latn;language=dflt;mapping=tex-text;!
-) (./contents/abstract-zh.tex [3]) (./contents/abstract-en.tex [1]) (./contents/contents.tex [2] (./main.toc [3])
+) (./contents/abstract-zh.tex [3]) (./contents/abstract-en.tex [1]) (./contents/contents.tex [2] (./main.toc)
 \tf@toc=\write5
 \openout5 = `main.toc'.
 
-) (./contents/chapter1.tex [4] [1] [2] [3] [4] [5]
-File: figure/fig3.png Graphic file (type bmp)
-<figure/fig3.png>
- [6]) (./contents/chapter2.tex [7]
+ [3]) (./contents/chapter4.tex
+File: figure/fig20.png Graphic file (type bmp)
+<figure/fig20.png>
+File: figure/fig19.png Graphic file (type bmp)
+<figure/fig19.png>
+ [1]
+File: figure/fig21.png Graphic file (type bmp)
+<figure/fig21.png>
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 15.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 38.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 15.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 38.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 15.
- [8] [9]
-File: figure/fig4.png Graphic file (type bmp)
-<figure/fig4.png>
-File: figure/fig15.png Graphic file (type bmp)
-<figure/fig15.png>
-File: figure/fig16.png Graphic file (type bmp)
-<figure/fig16.png>
- [10]
-Overfull \hbox (19.65605pt too wide) in paragraph at lines 67--82
- [][] 
- []
-
-File: figure/fig5.png Graphic file (type bmp)
-<figure/fig5.png>
-[11] [12]
-File: figure/fig6.png Graphic file (type bmp)
-<figure/fig6.png>
- [13]
-File: figure/fig10.png Graphic file (type bmp)
-<figure/fig10.png>
-File: figure/fig11.png Graphic file (type bmp)
-<figure/fig11.png>
-) (./contents/chapter3.tex [14]
-File: figure/fig18.png Graphic file (type bmp)
-<figure/fig18.png>
- [15] [16]
-
-Package natbib Warning: Citation `bernardin2008evaluating' on page 17 undefined on input line 68.
-
-
-Package natbib Warning: Citation `luiten2021hota' on page 17 undefined on input line 68.
-
-
-Overfull \hbox (12.72432pt too wide) in paragraph at lines 68--69
-[]\TU/SimSun(0)/m/n/12.045 衡 量 一 个 目 标 跟 踪 框 架 好 坏 有 多 种 指 标，|  早 期 常 用 的 是 \TU/TeXGyreTermes(0)/m/n/12.045 CLEAR MOT$[]$\TU/SimSun(0)/m/n/12.045 指
- []
-
-[17] [18]
-LaTeX Font Info:    Trying to load font information for U+dutchcal on input line 109.
- (c:/Program Files (x86)/texlive/2023/texmf-dist/tex/latex/dutchcal/udutchcal.fd
-File: udutchcal.fd 2011/06/16 Fontinst v1.933 font definitions for U/dutchcal.
-)
-LaTeX Font Info:    Font shape `U/dutchcal/m/n' will be
-(Font)              scaled to size 12.045pt on input line 109.
-LaTeX Font Info:    Font shape `U/dutchcal/m/n' will be
-(Font)              scaled to size 8.0pt on input line 109.
-LaTeX Font Info:    Font shape `U/dutchcal/m/n' will be
-(Font)              scaled to size 6.0pt on input line 109.
-LaTeX Font Info:    Font shape `U/dutchcal/m/n' will be
-(Font)              scaled to size 12.0pt on input line 127.
-LaTeX Font Info:    Font shape `U/dutchcal/m/n' will be
-(Font)              scaled to size 9.0pt on input line 127.
-LaTeX Font Info:    Font shape `U/dutchcal/m/n' will be
-(Font)              scaled to size 7.0pt on input line 127.
- [19] [20]) (./contents/chapter4.tex [21]) (./contents/chapter5.tex [22]) (./contents/chapter6.tex [23]) (./contents/bibliography.tex [24] (./main.bbl [25] [26])) (./contents/appendix.tex [27]) (./contents/achievements.tex [28]) (./contents/acknowlegement.tex [29])
-
-Package natbib Warning: There were undefined citations.
-
-[30] (./main.aux)
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 38.
+ [2]
+File: figure/fig23.png Graphic file (type bmp)
+<figure/fig23.png>
+ [3]
+File: figure/fig22.png Graphic file (type bmp)
+<figure/fig22.png>
+File: figure/fig24.png Graphic file (type bmp)
+<figure/fig24.png>
+ [4]) (./contents/chapter5.tex [5]) (./contents/chapter6.tex [6]) (./contents/bibliography.tex [7] (./main.bbl)) (./contents/appendix.tex [8]) (./contents/achievements.tex [9]) (./contents/acknowlegement.tex [10]) [11] (./main.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.22pt have occurred.
@@ -1083,15 +1037,15 @@ LaTeX Font Warning: Size substitutions with differences
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 41DA9090C2C69313E8675A6D742BC946;5078.
+(rerunfilecheck)             Checksum: 93DF45A8097770EB2EBBD49A0B626274;2183.
  ) 
 Here is how much of TeX's memory you used:
- 30684 strings out of 476706
- 670538 string characters out of 5799009
- 1868873 words of memory out of 5000000
- 50281 multiletter control sequences out of 15000+600000
- 548915 words of font info for 184 fonts, out of 8000000 for 9000
+ 30448 strings out of 476706
+ 660639 string characters out of 5799009
+ 1863873 words of memory out of 5000000
+ 50063 multiletter control sequences out of 15000+600000
+ 547213 words of font info for 176 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 105i,15n,107p,1258b,526s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 105i,16n,107p,1258b,665s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (37 pages).
+Output written on main.pdf (17 pages).

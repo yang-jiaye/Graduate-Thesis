@@ -3,10 +3,128 @@
 \fancyhead[RH]{第四章\quad 目标检测器训练}
 \section{目标检测器训练}
 
-\subsection{2D目标检测器}
+如第三章所言，目标跟踪器的精度很大程度上取决于目标检测器的精度。而目前的目标检测器往往针对某一个比赛如KITTI Object Detection，VOC (The PASCAL Visual Object Classes Challenge)，COCO (Common Objects in Context)等等。它们虽然能在某一个数据集上表现优异，但是迁移到其他数据集时性能位置。因此，将这些目标检测框架在合适的路侧数据集上重新进行训练时一件有必要的事情。我们在DAIR-V2X数据集上分别训练了2D和3D的目标检测器。
 
+\subsection{2D目标检测器}
+2D目标检测框架在2010年前主要是基于一些人工定义的图像特征，例如HOG(histogram of gradient)，DPM(Deformable Parts Models)\cite{felzenszwalb2008discriminatively}等。在2012年AlexNet\cite{krizhevsky2017imagenet}出现后，基于深度学习的图像检测方案成为主流。其中又可以分为两大分支。一支为以YOLO系列(2016-2022)\cite{redmon2018yolov3}\cite{bochkovskiy2020yolov4}，SSD(2016)\cite{liu2016ssd}等为代表的一阶段检测框架。它们是端到端(end to end)的算法，将整张图片作为输入，直接识别目标的类别与边界框。其特点是检测速度快，精确度一般，训练输入一般为2D边框。另一只是以Fast RCNN（2015）\cite{girshick2015fast}，Faster RCNN(2015)\cite{ren2015faster}，MaskRCNN(2017)\cite{he2017mask}等两阶段的检测框架。首先使用区域提议网络(RPN)生成稀疏的候选框，然后由检测网络RCNN识别候选目标类别与3D边界框。其特点是精确度高，但由于区域提议网络计算量大，检测速度较慢。从MaskRCNN后往往依赖于像素级标注，或掩码(Mask)信息，如图\ref{fig19}所示。
+
+\begin{figure}[htb] 
+    \center
+    \includegraphics[width=0.45\textwidth]{figure/fig20.png}
+    \includegraphics[width=0.45\textwidth]{figure/fig19.png}
+    \caption{KITTI数据集的掩码标注}
+    \label{fig19}
+\end{figure}
+
+由于我们希望较高的检测速度，以应对在线跟踪场景，且DAIR数据集不含掩码标注，不适合现有主流二阶段框架，我们选择了YOLO系列框架。为方便起见，我们采用了应用生态较为成熟的YOLOv4框架，没有使用最新的检测器。
+
+\subsubsection{YOLOv4网络模型}
+
+YOLOv4在YOLOv3的基础上，在数据增强、网络结构、网络训练方式、损失函数计算方式等方面进行改进。YOLOv4网络模型的主要贡献为：
+
+\begin{enumerate}
+    \item 提出了一种高效有力的目标检测模型，它可以使用一块1080Ti显卡或2080Ti显卡训练出快速且精确的目标检测器。
+    \item 论文确认了检测器训练阶段，最先进的Bag of Specials和Bag of Freebies方法的效果。
+    \item 论文修改了最先进的方法并且使它们在单GPU训练时更加高效合适，包括了CBN，PAN，SAM等
+\end{enumerate}
+
+其中，Bag of Freebies指不增加模型复杂度，也不增加推理的计算量的提高模型的准确度的训练方法技巧，Bag of Specials指增加少许模型复杂度或计算量，但可以显著提高模型的准确度的训练技巧。YOLOv4使用大量此类的技巧，提高了模型的性能。
+
+目标检测器无论是一阶段还是二阶段，往往都可以划分为如图\ref{fig21}结构，由输入(Input)，主干网络(Backbone)，颈部网络(Neck)，检测头(Head)与预测层(Prediction)组成。
+
+\begin{figure}[htb] 
+    \center
+    \includegraphics[width=\textwidth]{figure/fig21.png}
+    \caption{目标检测框架流程图\cite{bochkovskiy2020yolov4}}
+    \label{fig21}
+\end{figure}
+
+YOLOv4的网络结构如表\ref{table6}所示
+
+\begin{table}[htbp]
+    \centering
+    \caption{YOLOv4网络模型}
+    \begin{tabular}{c c}
+    \toprule
+    Module & Method \\
+    \midrule
+    Backbone & CSPDarknet53 \\
+    Neck & SPP, PAN \\
+    Head & YOLOv3 \\
+    \bottomrule
+    \end{tabular}
+    \label{table6}
+\end{table}
+
+\textbf{输入层 Input}
+YOLOv4网络模型在输入时进行了许多创新改进，例如Mosaic 数据增强、cmBN、SAT 自对抗训练等。
+
+\textbf{主干网络 Backbone} 
+YOLOv4采用的主干网络为 CSPDarknet53，CSPDarknet53是在Yolov3主干网络Darknet53的基础上，借鉴2019年CSPNet(Cross Stage Partial Network)的经验，产生的Backbone结构，其中包含了1个CBM和5个CSP模块。它解决了网络优化的梯度信息重复问题，既保证了推理速度和准确度，又减小了模型尺寸。YOLOv4还将DarknetConv2D的激活函数由LeakyReLU修改成了Mish。
+
+\textbf{颈部网络 Neck} 
+空间金字塔池化层SPP全称Spatial Pyramid Pooling，可以用来解决不同尺寸的特征图如何进入全连接层，增加主干网络的感受野，显著的分离最重要的上下文特征，补充语义信息。PAN(Path Aggregation Network)替代了YOLOv3的FPN(Feature Pyramid
+Networks)，加强了信息在特征金字塔中，自下而上的路径，提高了特征提取的能力。
+
+\textbf{检测头 Head} 主体还是YOLOv3算法的检测头，但是把损失函数修改为了CIOU。CIOU将目标与anchor之间的距离，重叠率、尺度以及惩罚项都考虑进去，使得目标框回归变得更加稳定，不会像IoU和GIoU一样出现训练过程中发散等问题。而惩罚因子把预测框长宽比拟合目标框的长宽比考虑进去。
+
+\subsubsection{YOLOv4训练及结果}
+
+YOLOv4有诸多复现版本，我们采用了AlexeyAB的版本在如表\ref{table7}所示的环境中对DAIR-V2X进行了训练。训练集由5042张图片构成，评测集由2016张图片构成。类别只有一种，即car。
+
+\begin{table}[htb]
+    \centering
+    \caption{YOLOv4训练环境}
+    \begin{tabular}{c c c c c c c}
+    \toprule
+    配置 & OS & GPU & CPU & CUDA & CUDNN & OpenCV \\
+    \midrule
+    版本 & \makecell{Windows\\10} & \makecell{Nvidia Geforce \\ RTX 2060m} & \makecell{R7\\ 4800H} & 12.1 & 8.x & 4.7\\
+    \bottomrule
+    \end{tabular}
+    \label{table7}
+\end{table}
+
+训练时损失函数下降图如图\ref{fig23}所示。可以看出下降曲线相对平缓，在大约2000步迭代后已经趋于收敛。IOU阈值为50\%时，平均精度mAP(mean of Average Precision)达到了96.25\%以上。
+
+\begin{figure}[htb] 
+    \center
+    \includegraphics[width=0.6\textwidth]{figure/fig23.png}
+    \caption{YOLOv4训练loss曲线}
+    \label{fig23}
+\end{figure}
+
+评测结果如表\ref{table8}所示。
+\begin{table}[htb]
+    \centering
+    \caption{YOLOv4测试结果}
+    \begin{tabular}{c c c c c}
+    \toprule
+    检测器 & \makecell{精确率\\precison} & \makecell{召回率\\Recall} & mAP@0.5 & 平均IOU \\
+    \midrule 
+    YOLOv4 & 0.87 & 0.94 & 0.9625 & 0.77 \\
+    \bottomrule
+    \end{tabular}
+    \label{table8}
+\end{table}
+其中，精确率定义为被正确预测的正样本数量占预测结果为正样本数量的比例，召回率定义为：被正确预测的正样本数量占真实结果为正样本数量的比例。目标检测过程中会生成大量预测框，每个预测框会有一个置信度属性。设置不同的置信度阈值，可以得到不同的输出。置信度越低，输出的预测框数量越大，召回率越高，但精确度越低，反之相反。如果设置不同的置信度阈值，就可以得到不同的召回率和准确率，将它们作为纵坐标与横坐标可以绘制一条曲线。曲线下方的区域面积定义为平均准确率AP(Average Precision)。所有类别的AP值的平均值定义为mAP。
+
+如图\ref{fig24}为随机选取的几张图片的检测结果。
+\begin{figure}[htb] 
+    \center
+    \includegraphics[width=0.45\textwidth]{figure/fig22.png}
+    \includegraphics[width=0.45\textwidth]{figure/fig24.png}
+    \caption{YOLOv4在评测集上的检测结果}
+    \label{fig24}
+\end{figure}
+在制作标注文件时，我们没有将类型Van和Bus合并至类型Car中，因此部分大车型漏检严重，但常见的小轿车准确度较高。
 
 \subsection{3D目标检测器}
 
+\subsubsection{PointRCNN网络模型}
+
+\subsubsection{PointRCNN训练及结果}
 
 \subsection{本章小结}
+
+本章首先介绍了2D检测器YOLOv4的原理，训练环境与网络配置，训练结果，结果分析。再介绍了3D检测器PointRCNN的原理，训练环境与网络配置，训练结果，结果分析。
