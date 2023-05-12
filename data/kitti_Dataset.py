@@ -1,7 +1,7 @@
 import os
 import numpy as np
-from data.calib import Calib
-from data.object3d import Object3d
+from calib import Calib
+from object3d import Object3d
 import cv2
 
 class Kitti_Dataset:
@@ -16,6 +16,8 @@ class Kitti_Dataset:
         self.pcs = os.path.join(self.dir_path, "velodyne")
         # 标签文件夹的地址
         self.labels = os.path.join(self.dir_path, "label_2")
+
+        self.pred = os.path.join(self.dir_path, "pred")
 
     # 得到当前数据集的大小
     def __len__(self):
@@ -54,6 +56,14 @@ class Kitti_Dataset:
     def get_labels(self, index):
         labels_path = os.path.join(self.labels, "{:06d}.txt".format(index))
         with open(labels_path) as f:
+            lines = f.readlines()
+        lines = list(filter(lambda x: len(x) > 0 and x != '\n', lines))
+
+        return [Object3d(x) for x in lines]
+    
+    def get_pred(self, index):
+        pred_path = os.path.join(self.pred, "{:06d}.txt".format(index))
+        with open(pred_path) as f:
             lines = f.readlines()
         lines = list(filter(lambda x: len(x) > 0 and x != '\n', lines))
 
