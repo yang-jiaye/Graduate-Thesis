@@ -7,7 +7,7 @@
 
 \subsection{EagerMOT原理}
 
-EagerMOT框架结合了互补的2D和3D（例如LiDAR）目标信息，这些信息是从预训练的物体检测器中获得的。框架的总体概述如图\ref{fig18}所示。作为每一帧的输入，首先从预先训练好的检测器中获得一组3D边框检测 $^{3d}D_t$ 和一组2D边框检测 $^{2d}D_t$。然后，融合模块(i) 将来自 2D 和 3D 的检测结果中相同的对象关联起来，(ii)两阶段数据关联模块进行目标关联，并且，该关联基于当前可用的检测结果信息（例如完整的2D+3D信息，仅含2D信息或仅含3D信息），)然后更新跟踪状态和，(iii)最后采用简单的跟踪管理机制初始化或终止轨迹。
+EagerMOT框架结合了互补的2D和3D（例如LiDAR）目标信息，这些信息是从预训练的物体检测器中获得的。框架的总体概述如图\ref{fig18}所示。作为每一帧的输入，首先从预先训练好的检测器中获得一组3D边框检测 $^{3d}D_t$ 和一组2D边框检测 $^{2d}D_t$。然后，融合模块(i) 将来自 2D 和 3D 的检测结果中相同的对象关联起来，(ii)两阶段数据关联模块进行目标关联，并且该关联基于当前可用的检测结果信息（例如完整的2D+3D信息，仅含2D信息或仅含3D信息），然后更新跟踪状态和，(iii)最后采用简单的跟踪管理机制初始化或终止轨迹。
 
 这种跟踪方法允许所有检测到的对象与轨迹相关联，即使它们仅在图像域或 3D 传感器中被检测到。这样，当目标被短时间遮挡后可以被恢复。并且当检测器之一漏检时，目标也能保持原有的3D位置。而且重要的是，在目标进入 3D 传感器感知范围之前，这种方法就已经可以在图像域中跟踪远处的物体。 一旦目标进入感应范围，我们对每个轨迹可以顺利地初始化一个 3D 运动模型。
 
@@ -88,7 +88,7 @@ MOTP用于衡量跟踪器的精确度：
 
 \subsubsection{HOTA指标}
 
-MOTA虽然在长时间里被用作跟踪器性能好坏的指标，但是它过于强调检测器的性能。一种极端情况是，检测的性能非常优秀，但是所有检测到的目标不做跟踪，而是全部分配一个相同的track id，此时的MOTA会非常高，因为$mme=0$。
+MOTA虽然在长时间里被用作跟踪器性能好坏的指标，但是它过于强调检测器的性能。一种极端情况是，检测的性能非常优秀，但是所有检测到的目标不作跟踪，而是全部分配一个相同的track id，此时的MOTA会非常高，因为$mme=0$。
 
 HOTA指标则综合考虑了不同匹配阈值$\alpha$下的检测精度与关联精度
 
@@ -110,7 +110,7 @@ HOTA指标则综合考虑了不同匹配阈值$\alpha$下的检测精度与关�
     AssA_\alpha=\frac{1}{|TP|}\Sigma_{c\in{TP}}\mathcal{A}(c)\\
     \mathcal{A}(c)=\frac{|TPA(c)|}{|TPA(c)|+|FNA(c)|+|FPA(c)|}
 \end{eqnarray}
-TP,FP,FN分别为正确的检测(True Positive)，错检(False Positive)和漏检(False Negtive)的数量。对于每一个正确的检测c，类似有正确关联TPAs (True Positive Associations), 错误关联FNAs (False Negative Associations) and 漏关联FPAs (False Positive Associations)等指标。
+TP,FP,FN分别为正确的检测(True Positive)，错检(False Positive)和漏检(False Negative)的数量。对于每一个正确的检测c，类似有正确关联TPAs (True Positive Associations), 错误关联FNAs (False Negative Associations) and 漏关联FPAs (False Positive Associations)等指标。
 
 \subsection{实验结果}
 
@@ -131,7 +131,7 @@ TP,FP,FN分别为正确的检测(True Positive)，错检(False Positive)和漏�
     \label{table3}
 \end{table}
 
-注意到，论文中提到的检测器，其实并非训练好的模型或者权重文件，而是检测器对KITTI数据集评测产生的检测结果。这意味着，如果我们想要使用这些检测器用于其他数据集，需要下载模型重新进行训练。
+注意到，论文中提到的检测器，其实并非训练好的模型或者权重文件，而是检测器对KITTI数据集评测产生的检测结果。这意味着如果我们想要使用这些检测器用于其他数据集，需要下载模型重新进行训练。
 
 论文采用了CLEAR-MOT, HOTA, AB3DMOT等指标作为评测标准，在如表\ref{table4}所示的基准测试(benchmark)中进行了评测：
 
@@ -181,7 +181,7 @@ TP,FP,FN分别为正确的检测(True Positive)，错检(False Positive)和漏�
     COMBINED & 78.529 & 76.839 & 80.506 & 82.917 & 85.081 & 84.239 & 89.777 \\
 \end{longtable}
 
-由于test set的真值(ground truth)储存在KITTI官网的server中，不对外开放，我们无法直接与论文中的结果进行比较，但在val set中得到的评测结果与论文在test set中得到的结果(HOTA 74.39, DetA 75.27, AssA 74.16)差距在合理的范围内，甚至评测指标更高。我们用论文提供的可视化代码生成了视频文件，大部分轨迹连续，且目标切换频率较少。验证了该算法在KITTI数据集上的有效性。
+由于test set的真值(ground truth)储存在KITTI官网的server中，不对外开放，我们无法直接与论文中的结果进行比较，但在val set中得到的评测结果与论文在test set中得到的结果(HOTA 74.39, DetA 75.27, AssA 74.16)差距在合理的范围内，甚至比论文中的结果更高。我们用论文提供的可视化代码生成了视频文件，大部分轨迹连续，且目标切换频率较少。验证了该算法在KITTI数据集上的有效性。
 
 \subsection{本章小节}
 

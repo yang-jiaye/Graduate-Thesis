@@ -66,7 +66,7 @@ YOLOv4采用的主干网络为 CSPDarknet53，CSPDarknet53是在Yolov3主干网�
 空间金字塔池化层SPP全称Spatial Pyramid Pooling，可以用来解决不同尺寸的特征图如何进入全连接层，增加主干网络的感受野，显著的分离最重要的上下文特征，补充语义信息。PAN(Path Aggregation Network)替代了YOLOv3的FPN(Feature Pyramid
 Networks)，加强了信息在特征金字塔中，自下而上的路径，提高了特征提取的能力。
 
-\textbf{检测头 Head} 主体还是YOLOv3算法的检测头，但是把损失函数修改为了CIOU。CIOU将目标与anchor之间的距离，重叠率、尺度以及惩罚项都考虑进去，使得目标框回归变得更加稳定，不会像IoU和GIoU一样出现训练过程中发散等问题。而惩罚因子把预测框长宽比拟合目标框的长宽比考虑进去。
+\textbf{检测头 Head} 主体还是YOLOv3算法的检测头，但是把损失函数修改为了CIOU(Complete IoU)。CIOU将目标与anchor之间的距离，重叠率、尺度以及惩罚项都考虑进去，使得目标框回归变得更加稳定，不会像IoU和GIoU(Generalized IoU)一样出现训练过程中发散等问题。而惩罚因子把预测框长宽比拟合目标框的长宽比考虑进去。
 
 \subsubsection{YOLOv4训练及结果}
 
@@ -100,7 +100,7 @@ YOLOv4有诸多复现版本，我们采用了AlexeyAB的版本在如表\ref{tabl
     \caption{YOLOv4测试结果}
     \begin{tabular}{c c c c c}
     \toprule
-    检测器 & \makecell{精确率\\precison} & \makecell{召回率\\Recall} & mAP@0.5 & 平均IOU \\
+    检测器 & \makecell{精确率\\precison} & \makecell{召回率\\Recall} & mAP@0.5 & 平均IoU \\
     \midrule 
     YOLOv4 & 0.87 & 0.94 & 0.9625 & 0.77 \\
     \bottomrule
@@ -123,7 +123,69 @@ YOLOv4有诸多复现版本，我们采用了AlexeyAB的版本在如表\ref{tabl
 
 \subsubsection{PointRCNN网络模型}
 
+PointRCNN\cite{shi2019pointrcnn}是一个两阶段的点云目标检测算法，其可以直接对原始点云数据进行目标检测，无需对其投影至某一视角或对其体素化。该算法分为两大阶段：（1）基于点云分割的提议区域生成（2）标准坐标系下的边界框优化。整体示意图如图所示
+
+\begin{figure}[htb] 
+    \center
+    \includegraphics[width=0.9\textwidth]{figure/fig27.png}
+    \caption{PointRCNN网络模型示意图\cite{shi2019pointrcnn}}
+    \label{fig27}
+\end{figure}
+
+\textbf{第一阶段：基于点云分割的提议区域生成}
+
+首先，为了获得原始点云的逐点判别特征，算法采用了PointNet++\cite{qi2017pointnet++}作为骨干网络。其中，其他的网络也可以替代这个位置，例如VoxelNet\cite{zhou2018voxelnet}等。
+
+其次，算法对点云进行了前景点云分割处理。前景点提供了预测目标位置和方向的丰富信息。通过学习分割前景点，点云网络捕获了上下文信息以进行准确的逐点预测，这也有利于 3D 边界框生成。
+
+最后，算法还添加了一个边界框回归头，用来同步地生成3D提议区域。为了约束生成的3D边界框，相对精准地预测目标的位置信息，每个前景点的周围区域，被沿着$X$轴与$Y$轴划分为了一系列离散的"bins"。算法对前景点的$X$轴与$Y$轴设置了一个搜索范围$S$，每个范围都被划分为了长宽均为$\delta$的bins，从而表示不同的目标中心坐标$(x,z)$。
+
+\textbf{点云池化处理}
+
+在获得第一阶段生成的㕺框后，算法对预选框进行了逐点池化处理，通过分割掩码，进行预选框内部前景点与背景点的分类。其中不包含点的预选框会被清除。
+
+\textbf{第二阶段：标准坐标系下的边界框优化}
+
+首先算法将池化后的点的坐标通过正规坐标变换，变换到标准坐标系，使得（1）坐标原点位于边界框中心，（2）坐标系的$X-Y$平面与地面平行，且$X$轴与边界框朝向一致，（3）$Y$轴与激光雷达坐标系的$Y$轴一致。
+
+然后，算法学习了预选框优化特征。并增加了深度信息$$d^{(p)}=\sqrt{(x^{(p)})^2+(y^{(p)})^2+(z^{(p)})^2}$$以补偿坐标变化下的位置信息损失。在对预选框优化时，算法采用了如下的损失函数，完成回归。
+
+\begin{equation}
+    \begin{aligned}
+        \mathcal{L}_{\text {refine }}= & \frac{1}{\|\mathcal{B}\|} \sum_{i \in \mathcal{B}} \mathcal{F}_{\mathrm{cls}}\left(\operatorname{prob}_{i}, \text { label }_{i}\right) \\
+        & +\frac{1}{\left\|\mathcal{B}_{\text {pos }}\right\|} \sum_{i \in \mathcal{B}_{\text {pos }}}\left(\tilde{\mathcal{L}}_{\text {bin }}^{(i)}+\tilde{\mathcal{L}}_{\text {res }}^{(i)}\right)
+        \end{aligned}
+\end{equation}
+
 \subsubsection{PointRCNN训练及结果}
+
+我们在DAIR-V2X数据集上应用了PointRCNN算法。设置batchsize为4，epoch为200，训练了RPN网络，设置batchsize为2，epoch为70,训练了RCNN网络。然后在评测集上进行了测试，实验结果如表\ref{table9}所示。
+
+\begin{table}[htb]
+    \centering
+    \caption{PointRCNN测试结果}
+    \begin{tabular}{c c c c c c}
+    \toprule
+    难度 & bbox & bev & 3d & aos \\
+    \midrule 
+    简单(Easy) & 81.5738 & 80.1970 & 69.2464 & 77.56 \\
+    中等(Moderate) & 80.4673 & 78.2905 & 65.6314 & 76.28 \\
+    困难(Hard) & 79.4982 & 78.2205 & 65.5195 & 77.14 \\
+    \bottomrule
+    \end{tabular}
+    \label{table9}
+\end{table}
+其中难度是数据集根据车辆被遮挡，截断的程度设置的检测难易程度。bbox是指2D检测框的准确度，bev指鸟瞰图下的检测框准确度，3d为3D检测框的准确度，aos为检测目标的旋转角的准确度。值得注意的是，表\ref{table9}中所有结果均是IoU为0.7的设置下得到的。
+
+如图\ref{fig26}所示为序列000018的检测结果。其中左图为点云可视化结果，红色边界框为标注数据，即真值，蓝色边界框为预测结果。右图为标注信息投影至图像中的结果，不包含目标检测结果。检测框架仅对图像中出现的车辆进行检测，由于第二章所述坐标系变换的原因，部分距离较近的车辆没有被识别。远处的车辆，被遮挡严重的没有被识别。在中等距离下的识别效果较好。值得注意的是，数据集本身的标注质量较为一般，例如图中最靠近观察点的三辆车，即图片最下方的3个车辆，标注的车辆高度明显比车辆的实际高度要小，车辆的车顶甚至比标注的边界框高出了不少。但我们识别出的车辆边界框还是比较符合现实的，比标注的要大一些。
+
+\begin{figure}[htb] 
+    \center
+    \includegraphics[width=0.48\textwidth]{figure/fig26.png}
+    \includegraphics[width=0.48\textwidth]{figure/fig9.png}
+    \caption{DAIR-V2X序列000018的检测结果}
+    \label{fig26}
+\end{figure}
 
 \subsection{本章小结}
 

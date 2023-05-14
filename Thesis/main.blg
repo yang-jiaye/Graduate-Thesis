@@ -1,4 +1,4 @@
-This is BibTeX, Version 0.99d (TeX Live 2022/dev/Debian)
+This is BibTeX, Version 0.99d (TeX Live 2023)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 The style file: gbt7714-numerical.bst
@@ -10,46 +10,49 @@ Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=200001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: main.bib
-You've used 36 entries,
-            5308 wiz_defined-function locations,
-            1224 strings with 15339 characters,
-and the built_in function-call counts, 332777 in all, are:
-= -- 6455
-> -- 38965
-< -- 48822
-+ -- 13621
-- -- 2555
-* -- 1828
-:= -- 45939
-add.period$ -- 109
-call.type$ -- 36
-change.case$ -- 301
-chr.to.int$ -- 11988
-cite$ -- 36
-duplicate$ -- 907
-empty$ -- 2642
-format.name$ -- 1268
-if$ -- 86642
+You've used 39 entries,
+            5374 wiz_defined-function locations,
+            1252 strings with 15833 characters,
+and the built_in function-call counts, 350311 in all, are:
+= -- 6850
+> -- 40874
+< -- 51348
++ -- 14382
+- -- 2694
+* -- 1929
+:= -- 48392
+add.period$ -- 119
+call.type$ -- 39
+change.case$ -- 316
+chr.to.int$ -- 12645
+cite$ -- 39
+duplicate$ -- 978
+empty$ -- 2858
+format.name$ -- 1331
+if$ -- 91225
 int.to.chr$ -- 1
-int.to.str$ -- 37
+int.to.str$ -- 40
 missing$ -- 0
-newline$ -- 216
-num.names$ -- 108
-pop$ -- 17682
+newline$ -- 232
+num.names$ -- 117
+pop$ -- 18558
 preamble$ -- 1
-purify$ -- 36
+purify$ -- 39
 quote$ -- 0
-skip$ -- 34421
+skip$ -- 36120
 stack$ -- 0
-substring$ -- 15421
-swap$ -- 36
-text.length$ -- 879
+substring$ -- 16258
+swap$ -- 39
+text.length$ -- 932
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 396
+type$ -- 429
 warning$ -- 0
-while$ -- 936
+while$ -- 993
 width$ -- 0
-write$ -- 493
+write$ -- 533

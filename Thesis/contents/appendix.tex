@@ -1,6 +1,49 @@
 \newpage
 \fancyhead[LH]{上海交通大学学位论文}
-\fancyhead[RH]{附录1}
+\fancyhead[RH]{附录A}
 
-\addcontentsline{toc}{section}{附录}
-\section*{符号与标记（附录1）}
+\addcontentsline{toc}{section}{附录A}
+\appendix
+\section*{IMU因子节点的残差推导（附录A）}
+\label{app1}
+\setcounter{equation}{0}
+\setcounter{section}{1}
+论文\cite{forster2016manifold}给出了一种IMU预积分算法。该算法可以计算因子图中两个节点间IMU测量值的预积分，为优化步骤提供高频率的状态更新。时刻$i-1$到时刻$i$间的残差定义如下：
+\begin{equation}
+    \mathbf{r}_{x_i}=[\mathbf{r}^T_{\Delta\mathbf{R}_i}, \mathbf{r}^T_{\Delta\mathbf{p}_i},\mathbf{r}^T_{\Delta\mathbf{v}_i}]^T\in\mathbb{R}^9
+\end{equation}
+其中，$\mathbf{r}^T_{\Delta\mathbf{R}_i}, \mathbf{r}^T_{\Delta\mathbf{p}_i},\mathbf{r}^T_{\Delta\mathbf{v}_i}$分别为来自姿态角$\mathbf{R}$(Rotation)，位置$\mathbf{p}$(Pose)和速度$\mathbf{v}$(velocity)的残差项。\begin{equation}
+    \begin{aligned}
+        \mathbf{r}_{\Delta\mathbf{R}_i} &=\log\left(\Delta\tilde{\mathbf{R}}_{i}(\mathbf{b}_{i-1}^g)\right)\mathbf{R}_{i-1}^T\mathbf{R}_i  \\
+        \mathbf{r}_{\Delta\mathbf{p}_i} &=\mathbf{R}_{i-1}^T\left(\mathbf{p}_i-\mathbf{p}_{i-1}-\mathbf{v}_{i-1}\Delta t_{\Delta i}-\frac{1}{2}\mathbf{g}\Delta t_{i}^2\right) -\Delta\tilde{\mathbf{p}}_{\Delta i}(\mathbf{b}_{i-1}^g,\mathbf{b}_{i-1}^a) \\
+        \mathbf{r}_{\Delta\mathbf{v}_i} &=\mathbf{R}_{i-1}^T\left(\mathbf{v}_i-\mathbf{v}_{i-1}-\mathbf{g}\Delta t_{\Delta i}\right) -\Delta\tilde{\mathbf{v}}_{i}(\mathbf{b}^g_{i-1},\mathbf{b}^a_{i-1})  \\
+        \mathbf{r}_{\Delta\mathbf{b}_i} &=\mathbf{b}_i-\mathbf{b}_{i-1} 
+        \end{aligned}
+\end{equation}
+其中$\mathbf{R},\mathbf{p}$和$\mathbf{v}$在连续的两个时刻$i-1$和$i$有如下关系
+\begin{equation}
+    \begin{aligned}
+        \mathbf{R}_i&=\mathbf{R}_{i-1}\exp\left(\left(\widetilde{\omega}_{i-1}-\mathbf{b}_{i-1}^g-\eta_{i-1}^{gd}\right)\Delta t_i\right)\\
+        \mathbf{v}_i&=\mathbf{v}_{i-1}+\mathbf{g}\Delta t_i+\Delta\mathbf{R}_{i-1}\left(\widetilde{\mathbf{a}}_{i-1}-\mathbf{b}_{i-1}^a-\eta_{i-1}^{ad}\right)\Delta t_i\\
+        \mathbf{p}_i&=\mathbf{p}_{i-1}+\mathbf{v}_{i-1}\Delta t_i+\frac{1}{2}\mathbf{g}\Delta t_i^2+\mathbf{R}_{i-1}\left(\widetilde{\mathbf{a}}_{i-1}-\mathbf{b}_{i-1}^a-\eta_{i-1}^{ad}\right)\Delta t_i^2
+    \end{aligned}
+\end{equation}
+$\Delta\mathbf{R}_i,\Delta\mathbf{p}_i,\Delta\mathbf{v}_i$是姿态角在时刻$t$相对于时刻$t-1$\textbf{人为定义}的增量，只有$\Delta\mathbf{R}_i$符合实际的“增量”意义，其他两个量只是为了让“增量”与$i-1$时刻的状态和重力影响无关
+\begin{equation}
+    \begin{aligned}
+        \Delta\mathbf{R}_i&=\mathbf{R}_{i-1}^T\mathbf{R}_i =\exp\left(\left(\widetilde{\omega}_{i-1}-\mathbf{b}_{i-1}^g-\eta_{i-1}^{gd}\right)\Delta t_i\right)\\
+        \Delta\mathbf{v}_i&=\mathbf{R}_{i-1}^T\left(\mathbf{v}_i-\mathbf{v}_{i-1}-\mathbf{g}\Delta t_i\right)\\
+        &=\Delta\mathbf{R}_{i-1}\left(\widetilde{\mathbf{a}}_{i-1}-\mathbf{b}_{i-1}^a-\eta_{i-1}^{ad}\right)\Delta t_i\\
+        \Delta\mathbf{p}_i&=\mathbf{R}_{i-1}^T\left(\mathbf{p}_i-\mathbf{p}_{i-1}-\mathbf{v}_{i-1}\Delta t_i-\frac{1}{2}\mathbf{g}\Delta t_i^2 \right)\\
+        &=\frac{1}{2}\left(\widetilde{\mathbf{a}}_{i-1}-\mathbf{b}_{i-1}^a-\eta_{i-1}^{ad}\right)\Delta t_i^2
+    \end{aligned}
+\end{equation}
+$\Delta\tilde{\mathbf{R}}_{i},\Delta\tilde{\mathbf{v}}_{i}$和$\Delta\tilde{\mathbf{p}}_{i}$是预积分测量量(preintegrated measurement)，代表了对应“增量”的主要部分，被如下定义
+\begin{equation}
+    \begin{aligned}
+        \Delta\tilde{\mathbf{R}}_{i}&=\exp\left((\widetilde{\omega}_{i-1}-\mathbf{b}_{i-1}^g)\Delta t_i\right)\\
+        \Delta\tilde{\mathbf{v}}_{i}&=(\mathbf{a}_{i-1}-\mathbf{b}_{i-1}^a)\Delta t_i\\
+        \Delta\tilde{\mathbf{p}}_{i}&=0
+    \end{aligned}
+\end{equation}
+论文假设了IMU采样时刻比相机更加密集，因此推导了从时刻$i$到时刻$j$之间的残差表达。如本文\ref{sec5.1}所假设的所有传感器采样时间一致，问题简化为相邻两时刻产生的残差。代入论文中的公式可知，本问题中的预积分测量量全部为0。
